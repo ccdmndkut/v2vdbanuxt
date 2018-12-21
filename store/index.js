@@ -39,14 +39,15 @@ const createStore = () => {
     },
 
     actions: {
-      nuxtServerInit({ commit }, { req }) {
+      nuxtServerInit({ dispatch }, { req }) {
         if (req.user) {
-          commit('setUser', req.user)
+          dispatch('setUser', req.user)
         }
       },
-      async actionB({ commit }) {
+      async actionB({ dispatch, commit }) {
         let t = await this.$fireAuth.currentUser.getIdTokenResult()
-        commit('setToke', t)
+        commit('setToke', t.token)
+        localStorage.setItem('token', t.token)
       },
       async signInWithEmail({ dispatch, commit }, cred) {
         commit('setLoading', true)
@@ -62,6 +63,7 @@ const createStore = () => {
       async signOut({ commit }) {
         await this.$fireAuth.signOut()
         commit('setUser', null)
+        commit('setToke', null)
       }
     }
   })
