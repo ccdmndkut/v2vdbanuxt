@@ -1,15 +1,12 @@
 <template>
   <section class="container">
     <div>
-      <Auth />
+      admin
     </div>
   </section>
 </template>
 <script>
-import Auth from '~/components/Auth.vue'
-export default {
-  components: { Auth }
-}
+export default {}
 </script>
 
 <style>

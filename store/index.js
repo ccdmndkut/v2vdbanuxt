@@ -1,12 +1,11 @@
 import Vuex from 'vuex'
 
 function buildUserObject(authData) {
-  let { email, displayName, uid, photoURL } = authData.user
+  let { email, displayName, uid } = authData.user
   let user = {}
   user['email'] = email
   user['name'] = displayName
   user['uid'] = uid
-  user['picture'] = photoURL
   return user
 }
 
@@ -14,7 +13,8 @@ const createStore = () => {
   return new Vuex.Store({
     state: {
       user: null,
-      loading: false
+      loading: false,
+      tokeO: null
     },
 
     getters: {
@@ -30,6 +30,9 @@ const createStore = () => {
       setUser(state, payload) {
         state.user = payload
       },
+      setToke(state, payload) {
+        state.tokeO = payload
+      },
       setLoading(state, payload) {
         state.loading = payload
       }
@@ -42,12 +45,14 @@ const createStore = () => {
         }
       },
 
-      async signInWithGooglePopup({ commit }) {
+      async signInWithEmail({ commit }, cred) {
         commit('setLoading', true)
         let authData = await this.$fireAuth.signInWithEmailAndPassword(
-          GoogleAuthProvider
+          cred.email,
+          cred.pass
         )
         commit('setUser', buildUserObject(authData))
+        commit('setToke', authData)
         commit('setLoading', false)
       },
 

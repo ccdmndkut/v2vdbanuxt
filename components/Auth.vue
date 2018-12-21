@@ -1,6 +1,16 @@
 <template>
   <div>
-    <hr>
+    <div class="links">
+      <a
+        @click="login()"
+        class="button--green"
+      >Log In</a>
+      <a
+        @click="logout()"
+        class="button--green"
+      >Log Out</a>
+    </div>
+    <hr />
     <h3 class="sectionTitle">Firebase Authentication</h3>
     <div>
       <b-form-group
@@ -28,16 +38,7 @@
         ></b-form-input>
       </b-form-group>
     </div>
-    <div class="links">
-      <a
-        @click="login()"
-        class="button--green"
-      >Log In</a>
-      <a
-        @click="logout()"
-        class="button--green"
-      >Log Out</a>
-    </div>
+
   </div>
 </template>
 
@@ -61,7 +62,8 @@ export default {
     //   }
     // },
     async login() {
-      await this.$store.dispatch('signInWithGooglePopup')
+      var cred = this.cred
+      await this.$store.dispatch('signInWithEmail', cred)
       this.$router.replace('/admin')
     },
     async logout() {
