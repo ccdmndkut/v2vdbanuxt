@@ -1,9 +1,5 @@
 <template>
-  <section class="container">
-    <div>
-      admin
-    </div>
-  </section>
+  <section class="container"><div>admin</div></section>
 </template>
 <script>
 export default {}

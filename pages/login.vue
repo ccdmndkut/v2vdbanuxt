@@ -1,8 +1,6 @@
 <template>
   <section class="container">
-    <div>
-      <Auth />
-    </div>
+    <div><Auth /></div>
   </section>
 </template>
 <script>

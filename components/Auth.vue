@@ -1,36 +1,20 @@
 <template>
   <div>
     <div class="links">
-      <a
-        @click="login()"
-        class="button--green"
-      >Log In</a>
-      <a
-        @click="logout()"
-        class="button--green"
-      >Log Out</a>
+      <a @click="login()" class="button--green">Log In</a>
+      <a @click="logout()" class="button--green">Log Out</a>
     </div>
     <hr />
     <h3 class="sectionTitle">Firebase Authentication</h3>
     <div>
-      <b-form-group
-        :label-cols="2"
-        horizontal
-        label="Email"
-        label-for="Email"
-      >
+      <b-form-group :label-cols="2" horizontal label="Email" label-for="Email">
         <b-form-input
           id="Email"
           type="text"
           v-model="cred.email"
         ></b-form-input>
       </b-form-group>
-      <b-form-group
-        :label-cols="2"
-        horizontal
-        label="Pass"
-        label-for="Pass"
-      >
+      <b-form-group :label-cols="2" horizontal label="Pass" label-for="Pass">
         <b-form-input
           id="Pass"
           type="password"
@@ -38,7 +22,6 @@
         ></b-form-input>
       </b-form-group>
     </div>
-
   </div>
 </template>
 

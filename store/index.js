@@ -44,15 +44,18 @@ const createStore = () => {
           commit('setUser', req.user)
         }
       },
-
-      async signInWithEmail({ commit }, cred) {
+      async actionB({ commit }) {
+        let t = await this.$fireAuth.currentUser.getIdTokenResult()
+        commit('setToke', t)
+      },
+      async signInWithEmail({ dispatch, commit }, cred) {
         commit('setLoading', true)
         let authData = await this.$fireAuth.signInWithEmailAndPassword(
           cred.email,
           cred.pass
         )
+        dispatch('actionB')
         commit('setUser', buildUserObject(authData))
-        commit('setToke', authData)
         commit('setLoading', false)
       },
 
