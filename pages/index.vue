@@ -1,32 +1,12 @@
 <template>
   <section class="container">
-    <div>
-      <logo/>
-      <h1 class="title">v2vdbanuxt</h1>
-      <h2 class="subtitle">V2V DB</h2>
-      <div class="links">
-        <a
-          class="button--green"
-          href="https://nuxtjs.org/"
-          target="_blank"
-        >Documentation</a>
-        <a
-          class="button--grey"
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-        >GitHub</a>
-      </div>
-    </div>
+    <div></div>
   </section>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-
 export default {
-  components: {
-    Logo
-  }
+  components: {}
 }
 </script>
 
