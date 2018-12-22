@@ -31,7 +31,7 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['~/plugins/fireauth.js'],
 
   /*
    ** Nuxt.js modules
@@ -41,6 +41,7 @@ module.exports = {
     '@nuxtjs/axios',
     // Doc: https://bootstrap-vue.js.org/docs/
     'bootstrap-vue/nuxt',
+    'cookie-universal-nuxt',
     [
       'nuxt-fire',
       {

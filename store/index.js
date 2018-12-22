@@ -14,7 +14,8 @@ const createStore = () => {
     state: {
       user: null,
       loading: false,
-      tokeO: null
+      tokeO: null,
+      all: null
     },
 
     getters: {
@@ -33,6 +34,9 @@ const createStore = () => {
       setToke(state, payload) {
         state.tokeO = payload
       },
+      setAll(state, payload) {
+        state.all = payload
+      },
       setLoading(state, payload) {
         state.loading = payload
       }
@@ -44,10 +48,11 @@ const createStore = () => {
           dispatch('setUser', req.user)
         }
       },
-      async actionB({ dispatch, commit }) {
-        let t = await this.$fireAuth.currentUser.getIdTokenResult()
+      async actionB({ app, commit }) {
+        let all = await this.$fireAuth.currentUser
+        let t = this.$fireAuth.currentUser.getIdTokenResult()
         commit('setToke', t.token)
-        localStorage.setItem('token', t.token)
+        commit('setAll', all)
       },
       async signInWithEmail({ dispatch, commit }, cred) {
         commit('setLoading', true)
@@ -59,7 +64,9 @@ const createStore = () => {
         commit('setUser', buildUserObject(authData))
         commit('setLoading', false)
       },
-
+      setUserCookie({ commit }, user) {
+        commit('setUser', user)
+      },
       async signOut({ commit }) {
         await this.$fireAuth.signOut()
         commit('setUser', null)
