@@ -1,12 +1,9 @@
 <template>
-  <section class="container">
-    <div><Auth /></div>
-  </section>
+  <section class="container"><div>index</div></section>
 </template>
 <script>
-import Auth from '~/components/Auth.vue'
 export default {
-  components: { Auth }
+  components: {}
 }
 </script>
 

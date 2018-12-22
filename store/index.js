@@ -1,4 +1,5 @@
 import Vuex from 'vuex'
+import firebase from 'firebase'
 
 function buildUserObject(authData) {
   let { email, displayName, uid } = authData.user
@@ -46,6 +47,9 @@ const createStore = () => {
       nuxtServerInit({ dispatch }, { req }) {
         if (req.user) {
           dispatch('setUser', req.user)
+          console.log(req.user)
+        } else {
+          console.log('hi')
         }
       },
       async actionB({ app, commit }) {
@@ -64,9 +68,7 @@ const createStore = () => {
         commit('setUser', buildUserObject(authData))
         commit('setLoading', false)
       },
-      setUserCookie({ commit }, user) {
-        commit('setUser', user)
-      },
+
       async signOut({ commit }) {
         await this.$fireAuth.signOut()
         commit('setUser', null)

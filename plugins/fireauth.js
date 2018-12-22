@@ -1,3 +1,11 @@
+import firebase from 'firebase'
+
+export default function({ app }) {
+  if (process.client) {
+    return app.$fireAuth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
+  }
+}
+
 // export default context => {
 //   const { store } = context
 

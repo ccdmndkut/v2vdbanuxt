@@ -1,7 +1,5 @@
 <template>
-  <section class="container">
-    <div><Auth /></div>
-  </section>
+  <div class="container"><Auth /></div>
 </template>
 <script>
 import Auth from '~/components/Auth.vue'
@@ -10,12 +8,12 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .container {
-  min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  margin-top: 40px;
+  /* align-items: center; */
   text-align: center;
 }
 .title {
@@ -39,7 +37,7 @@ export default {
   font-size: 38px;
   color: #526488;
   word-spacing: 5px;
-  padding-bottom: 15px;
+  margin-bottom: 55px;
 }
 .mediumText {
   font-weight: 200;
