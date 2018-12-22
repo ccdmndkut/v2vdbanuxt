@@ -1,5 +1,6 @@
 import Vuex from 'vuex'
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/auth'
 
 function buildUserObject(authData) {
   let { email, displayName, uid } = authData.user
@@ -44,7 +45,7 @@ const createStore = () => {
     },
 
     actions: {
-      nuxtServerInit({ dispatch }, { req }) {
+      nuxtServerInit({ dispatch, app }, { req }) {
         if (req.user) {
           dispatch('setUser', req.user)
           console.log(req.user)

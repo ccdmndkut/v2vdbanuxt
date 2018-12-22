@@ -8,8 +8,23 @@
 //     return true
 //   }
 // }
-export default function({ store, redirect, route }) {
+
+export default function({ store, redirect, route, app }) {
+  if (process.client) {
+    var values = [],
+      keys = Object.keys(sessionStorage),
+      i = keys.length
+    while (i--) {
+      values.push(sessionStorage.getItem(keys[i]))
+    }
+    console.log(values)
+  }
   console.log('a')
+  // let f = app.$fireAuth.currentUser
+  let s = app.$fireAuth
+  // let email = f.email
+  console.log(s)
+
   // user(app, store, redirect, route)
   redirctFunc(store, redirect, route)
 }

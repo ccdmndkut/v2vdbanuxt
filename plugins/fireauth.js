@@ -1,7 +1,9 @@
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/auth'
 
 export default function({ app }) {
   if (process.client) {
+    console.log('from plugins/fireauth')
     return app.$fireAuth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
   }
 }
