@@ -1,7 +1,7 @@
 const pkg = require('./package')
 
 module.exports = {
-  mode: 'universal',
+  // mode: 'universal',
 
   /*
    ** Headers of the page
@@ -15,9 +15,19 @@ module.exports = {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
-  router: {
-    middleware: 'router-auth'
+  env: {
+    FIREBASE: {
+      API_KEY: 'AIzaSyDMbILM1a366tYFM3-nOLwCUXapJ8ETqmw',
+      DATABASE_NAME: 'test',
+      PROJECT_ID: 'vaclaims-194006',
+      SENDER_ID: '524576132881'
+    }
   },
+  layoutTransition: {
+    name: 'layout',
+    mode: 'out-in'
+  },
+  router: {},
   /*
    ** Customize the progress-bar color
    */
@@ -31,7 +41,6 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/fireauth.js'],
 
   /*
    ** Nuxt.js modules
@@ -41,39 +50,42 @@ module.exports = {
     '@nuxtjs/axios',
     // Doc: https://bootstrap-vue.js.org/docs/
     'bootstrap-vue/nuxt',
-    'cookie-universal-nuxt',
-    [
-      'nuxt-fire',
-      {
-        useOnly: ['auth'],
-        config: {
-          development: {
-            apiKey: 'AIzaSyDMbILM1a366tYFM3-nOLwCUXapJ8ETqmw',
-            authDomain: 'vaclaims-194006.firebaseapp.com',
-            databaseURL: 'https://vaclaims-194006.firebaseio.com',
-            projectId: 'vaclaims-194006',
-            storageBucket: 'vaclaims-194006.appspot.com',
-            messagingSenderId: '524576132881',
-            timestampsInSnapshots: true
-          },
-          production: {
-            apiKey: 'AIzaSyDMbILM1a366tYFM3-nOLwCUXapJ8ETqmw',
-            authDomain: 'vaclaims-194006.firebaseapp.com',
-            databaseURL: 'https://vaclaims-194006.firebaseio.com',
-            projectId: 'vaclaims-194006',
-            storageBucket: 'vaclaims-194006.appspot.com',
-            messagingSenderId: '524576132881',
-            timestampsInSnapshots: true
-          }
-        }
-      }
-    ]
+    'cookie-universal-nuxt'
+    // [
+    //   'nuxt-fire',
+    //   {
+    //     useOnly: ['auth'],
+    //     config: {
+    //       development: {
+    //         apiKey: 'AIzaSyDMbILM1a366tYFM3-nOLwCUXapJ8ETqmw',
+    //         authDomain: 'vaclaims-194006.firebaseapp.com',
+    //         databaseURL: 'https://vaclaims-194006.firebaseio.com',
+    //         projectId: 'vaclaims-194006',
+    //         storageBucket: 'vaclaims-194006.appspot.com',
+    //         messagingSenderId: '524576132881',
+    //         timestampsInSnapshots: true
+    //       },
+    //       production: {
+    //         apiKey: 'AIzaSyDMbILM1a366tYFM3-nOLwCUXapJ8ETqmw',
+    //         authDomain: 'vaclaims-194006.firebaseapp.com',
+    //         databaseURL: 'https://vaclaims-194006.firebaseio.com',
+    //         projectId: 'vaclaims-194006',
+    //         storageBucket: 'vaclaims-194006.appspot.com',
+    //         messagingSenderId: '524576132881',
+    //         timestampsInSnapshots: true
+    //       }
+    //     }
+    //   }
+    // ]
   ],
   /*
    ** Axios module configuration
    */
   axios: {
-    // See https://github.com/nuxt-community/axios-module#options
+    // debug: true,
+    // proxy: {
+    //   api: 'https://nuxt-fireauth-v5.now.sh'
+    // }
   },
 
   /*
@@ -81,17 +93,31 @@ module.exports = {
    */
   build: {
     /*
-     ** You can extend webpack config here
+     ** Run ESLint on save
      */
-    extend(config, ctx) {
-      // Run ESLint on save
-      if (ctx.isDev && ctx.isClient) {
+    postcss: {
+      plugins: {
+        'postcss-cssnext': {
+          features: {
+            customProperties: false
+          }
+        }
+      }
+    },
+    extend(config, { isDev, isClient }) {
+      if (isDev && isClient) {
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
           exclude: /(node_modules)/
         })
+      }
+
+      if (isDev) {
+        config.resolve.alias['config'] = '~/config/development'
+      } else {
+        config.resolve.alias['config'] = '~/config/production'
       }
     }
   }

@@ -1,82 +1,16 @@
-import Vuex from 'vuex'
-import firebase from 'firebase/app'
-import 'firebase/auth'
+import { getUserFromCookie, getUserFromSession } from '@/helpers'
 
-function buildUserObject(authData) {
-  let { email, displayName, uid } = authData.user
-  let user = {}
-  user['email'] = email
-  user['name'] = displayName
-  user['uid'] = uid
-  return user
-}
-
-const createStore = () => {
-  return new Vuex.Store({
-    state: {
-      user: null,
-      loading: false,
-      tokeO: null,
-      all: null
-    },
-
-    getters: {
-      activeUser: (state, getters) => {
-        return state.user
-      },
-      isLoading: (state, getters) => {
-        return state.loading
-      }
-    },
-
-    mutations: {
-      setUser(state, payload) {
-        state.user = payload
-      },
-      setToke(state, payload) {
-        state.tokeO = payload
-      },
-      setAll(state, payload) {
-        state.all = payload
-      },
-      setLoading(state, payload) {
-        state.loading = payload
-      }
-    },
-
-    actions: {
-      nuxtServerInit({ dispatch, app }, { req }) {
-        if (req.user) {
-          dispatch('setUser', req.user)
-          console.log(req.user)
-        } else {
-          console.log('hi')
-        }
-      },
-      async actionB({ app, commit }) {
-        let all = await this.$fireAuth.currentUser
-        let t = this.$fireAuth.currentUser.getIdTokenResult()
-        commit('setToke', t.token)
-        commit('setAll', all)
-      },
-      async signInWithEmail({ dispatch, commit }, cred) {
-        commit('setLoading', true)
-        let authData = await this.$fireAuth.signInWithEmailAndPassword(
-          cred.email,
-          cred.pass
-        )
-        dispatch('actionB')
-        commit('setUser', buildUserObject(authData))
-        commit('setLoading', false)
-      },
-
-      async signOut({ commit }) {
-        await this.$fireAuth.signOut()
-        commit('setUser', null)
-        commit('setToke', null)
-      }
+export const actions = {
+  async nuxtServerInit({ dispatch }, { req }) {
+    console.log('store = nuxt server init')
+    const user = getUserFromCookie(req)
+    if (user) {
+      await dispatch('modules/user/setUSER', {
+        name: user.name,
+        email: user.email,
+        avatar: user.picture,
+        uid: user.user_id
+      })
     }
-  })
+  }
 }
-
-export default createStore

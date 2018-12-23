@@ -1,11 +1,13 @@
 <template>
-  <section class="container"><div>admin</div></section>
+  <section class="container">
+    <nuxt-link to="/login">to login from admin</nuxt-link>
+  </section>
 </template>
 <script>
 export default {}
 </script>
 
-<style>
+<style scoped>
 .container {
   min-height: 100vh;
   display: flex;
