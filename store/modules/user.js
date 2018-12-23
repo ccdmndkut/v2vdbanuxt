@@ -26,7 +26,7 @@ export const actions = {
     console.log('[STORE ACTIONS] - login')
     const token = await firebaseApp.auth().currentUser.getIdToken(true)
     const userInfo = {
-      name: user.displayName,
+      // name: user.displayName,
       email: user.email,
       avatar: user.photoURL,
       uid: user.uid
