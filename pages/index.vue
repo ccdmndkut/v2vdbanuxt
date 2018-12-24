@@ -40,11 +40,6 @@ export default {
     async signout() {
       await this.logout()
       this.$router.push('/')
-      // this.logout().then(() => {
-      //   this.$router.push('/')
-      // }).catch((error) => {
-      //   console.log(error.message)
-      // })
     }
   }
 }
