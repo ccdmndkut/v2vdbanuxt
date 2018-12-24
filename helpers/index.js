@@ -3,7 +3,7 @@ var cookieparser = require('cookieparser')
 
 export function getUserFromCookie(req) {
   if (!req.headers.cookie) {
-    // console.log('helpers = "no headers cookie"')
+    console.log('helpers = "no headers cookie"')
     return
   }
 

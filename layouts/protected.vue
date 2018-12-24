@@ -2,14 +2,9 @@
   <div class="container">
     <div>
       <nuxt-link to="/">Home</nuxt-link>
-      <a
-        href="#"
-        @click="signout"
-      >Logout</a>
+      <a href="#" @click="signout">Logout</a>
     </div>
-    <div>
-      <nuxt />
-    </div>
+    <div><nuxt /></div>
   </div>
 </template>
 
@@ -20,13 +15,12 @@ export default {
   methods: {
     ...mapActions('modules/user', ['logout']),
     async signout() {
-      await this.logout()
-      this.$router.push('/')
-      // this.logout().then(() => {
-      //   this.$router.push('/')
-      // }).catch((error) => {
-      //   console.log(error.message)
-      // })
+      try {
+        await this.logout()
+        this.$router.push('/')
+      } catch (error) {
+        alert(error.message)
+      }
     }
   }
 }
