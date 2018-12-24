@@ -3,7 +3,7 @@
     <div>
       <nuxt-link to="/">Home</nuxt-link>
       <a
-        href='#'
+        href="#"
         @click="signout"
       >Logout</a>
     </div>

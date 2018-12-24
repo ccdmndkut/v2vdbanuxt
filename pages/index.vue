@@ -3,20 +3,34 @@
     <div>
       <div>
         <nuxt-link to="/protected">Protected</nuxt-link>
-        <nuxt-link v-if="uid" to="/auth/signin">Logout</nuxt-link>
-        <nuxt-link v-else to="/auth/signin">Sign In</nuxt-link>
+        <nuxt-link to="/">Home</nuxt-link>
+        <a
+          href="#"
+          @click="signout"
+        >Logout</a>
       </div>
-      <h2>Updated with Cookie check in nuxt server init</h2>
-      <p>Unprotected page --- anyone can see this</p>
+      <nuxt-link to="/auth/signin">Sign In</nuxt-link>
     </div>
+    <h2>Updated with Cookie check in nuxt server init</h2>
+    <p>Unprotected page --- anyone can see this</p>
   </section>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 export default {
-  computed: {
-    ...mapGetters('modules/user', ['uid'])
+  middleware: 'authenticated',
+  methods: {
+    ...mapActions('modules/user', ['logout']),
+    async signout() {
+      await this.logout()
+      this.$router.push('/')
+      // this.logout().then(() => {
+      //   this.$router.push('/')
+      // }).catch((error) => {
+      //   console.log(error.message)
+      // })
+    }
   }
 }
 </script>

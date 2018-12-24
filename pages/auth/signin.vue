@@ -1,18 +1,34 @@
 <template>
   <section class="container">
-    <div><nuxt-link to="/auth/signup">Not a user? Sign-up</nuxt-link></div>
+    <div>
+      <nuxt-link to="/auth/signup">Not a user? Sign-up</nuxt-link>
+    </div>
     <div>
       <form @submit.prevent="submit">
         <label for="usernameTxt">Username:</label>
-        <input id="usernameTxt" type="email" v-model="email" />
+        <input
+          id="usernameTxt"
+          type="email"
+          v-model="email"
+        />
         <label for="passwordTxt">Password:</label>
-        <input id="passwordTxt" type="password" v-model="password" />
+        <input
+          id="passwordTxt"
+          type="password"
+          v-model="password"
+        />
         <button type="submit">Sign In</button>
       </form>
-      <button class="button" @click.prevent="fbGoogleLogin">
+      <button
+        class="button"
+        @click.prevent="fbGoogleLogin"
+      >
         Google Login
       </button>
-      <button class="button" @click.prevent="fbGoogleLogout">
+      <button
+        class="button"
+        @click.prevent="fbGoogleLogout"
+      >
         Google Logout
       </button>
     </div>
@@ -37,7 +53,8 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(firebaseUser => {
-          return this.login(firebaseUser.uid)
+          // console.log(firebaseUser.user.uid)
+          return this.login(firebaseUser.user)
         })
         .then(() => {
           this.$router.push('/protected')

@@ -3,12 +3,12 @@ var cookieparser = require('cookieparser')
 
 export function getUserFromCookie(req) {
   if (!req.headers.cookie) {
-    console.log('helpers = "no headers cookie"')
+    // console.log('helpers = "no headers cookie"')
     return
   }
 
   if (req.headers.cookie) {
-    console.log('helpers = "has headers cookie"')
+    // console.log('helpers = "has headers cookie"')
 
     const parsed = cookieparser.parse(req.headers.cookie)
     const accessTokenCookie = parsed.access_token

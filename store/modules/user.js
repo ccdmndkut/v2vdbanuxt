@@ -24,11 +24,10 @@ export const getters = {
 export const actions = {
   async login({ dispatch, state }, user) {
     console.log('[STORE ACTIONS] - login')
+    console.log('user is ' + user)
     const token = await firebaseApp.auth().currentUser.getIdToken(true)
     const userInfo = {
-      // name: user.displayName,
       email: user.email,
-      avatar: user.photoURL,
       uid: user.uid
     }
 
