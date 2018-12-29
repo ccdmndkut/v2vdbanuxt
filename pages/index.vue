@@ -4,14 +4,11 @@
       <div>
         <nuxt-link to="/protected">Protected</nuxt-link>
         <nuxt-link to="/">Home</nuxt-link>
-        <template v-if="user==null">
+        <template v-if="user == null">
           <nuxt-link to="/auth/signin">Sign In</nuxt-link>
         </template>
         <template v-else>
-          <a
-            href="#"
-            @click="signout"
-          >Logout</a>
+          <a href="#" @click="signout">Logout</a>
         </template>
       </div>
     </div>
@@ -23,7 +20,6 @@
       <h2>Updated with Cookie and Logged Out. check in nuxt server init</h2>
       <p>Unprotected page --- anyone can see this</p>
     </template>
-
   </section>
 </template>
 

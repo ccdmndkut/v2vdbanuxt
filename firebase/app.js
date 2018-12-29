@@ -1,4 +1,5 @@
 import firebase from 'firebase'
+
 import env from 'config'
 
 // uncomment the below if you use firestore DB instead of firebase DB
