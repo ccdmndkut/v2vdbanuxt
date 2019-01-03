@@ -1,8 +1,6 @@
 <template>
   <section class="container">
-    <div>
-      <nuxt-link to="/auth/signup">Not a user? Sign-up</nuxt-link>
-    </div>
+    <div><nuxt-link to="/auth/signup">Not a user? Sign-up</nuxt-link></div>
     <div>
       <form @submit.prevent="submit">
         <label for="usernameTxt">Username:</label>
@@ -21,16 +19,10 @@
         />
         <button type="submit">Sign In</button>
       </form>
-      <button
-        class="button"
-        @click.prevent="fbGoogleLogin"
-      >
+      <button class="button" @click.prevent="fbGoogleLogin">
         Google Login
       </button>
-      <button
-        class="button"
-        @click.prevent="fbGoogleLogout"
-      >
+      <button class="button" @click.prevent="fbGoogleLogout">
         Google Logout
       </button>
     </div>

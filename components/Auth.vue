@@ -1,36 +1,47 @@
 <template>
   <div>
     <div class="bar"></div>
-
     <div class="cont">
       <hr />
       <h3 class="sectionTitle">Firebase Authentication</h3>
       <hr />
-
       <div>
         <b-form-group
           :label-cols="2"
           horizontal
           label="Email"
-          label-for="Email"
+          label-for="usernameTxt"
         >
           <b-form-input
-            id="Email"
-            type="text"
-            v-model="cred.email"
+            autocomplete="username"
+            id="usernameTxt"
+            type="email"
+            v-model="email"
           ></b-form-input>
         </b-form-group>
-        <b-form-group :label-cols="2" horizontal label="Pass" label-for="Pass">
+        <b-form-group
+          :label-cols="2"
+          horizontal
+          label="Pass"
+          label-for="passwordTxt"
+        >
           <b-form-input
-            id="Pass"
+            autocomplete="current-password"
+            id="passwordTxt"
             type="password"
-            v-model="cred.pass"
+            v-model="password"
           ></b-form-input>
         </b-form-group>
         <hr />
         <div class="links">
-          <a @click="login()" class="button--green">Log In</a>
-          <a @click="logout()" class="button--green">Log Out</a>
+          <a
+            @click="login()"
+            class="button--green"
+          > Log In </a>
+          <a
+            @click="logout()"
+            class="button--green"
+          > Log Out </a>
         </div>
       </div>
     </div>
@@ -38,48 +49,42 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+import firebaseApp, { googleProvider } from '~/firebase/app'
 export default {
   data() {
     return {
-      cred: {
-        email: '',
-        pass: ''
-      }
+      email: '',
+      password: ''
     }
   },
+  middleware: ['handle-login-route'],
   methods: {
-    // async login() {
-    //   var cred = this.cred
-    //   try {
-    //     await this.$fireAuth.signInWithEmailAndPassword(cred.email, cred.pass)
-    //   } catch (e) {
-    //     alert(e)
-    //   }
-    // },
-    async login() {
-      var cred = this.cred
-      await this.$store.dispatch('signInWithEmail', cred)
-      this.$router.replace('/admin')
+    ...mapActions('modules/user', ['login']),
+    submit() {
+      firebaseApp
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(firebaseUser => {
+          // console.log(firebaseUser.user.uid)
+          return this.login(firebaseUser.user)
+        })
+        .then(() => {
+          this.$router.push('/protected')
+        })
+        .catch(error => {
+          console.log(error.message)
+        })
     },
-    async logout() {
-      try {
-        await this.$fireAuth.signOut()
-      } catch (e) {
-        alert(e)
-      }
+    async fbGoogleLogin() {
+      const { user } = await firebaseApp.auth().signInWithPopup(googleProvider)
+      await this.login(user)
+      this.$router.push('/protected')
+    },
+    async fbGoogleLogout() {
+      await this.logout()
+      this.$router.push('/')
     }
-    // async createUser() {
-    //   var cred = this.cred
-    //   try {
-    //     await this.$fireAuth.createUserWithEmailAndPassword(
-    //       cred.email,
-    //       cred.pass
-    //     )
-    //   } catch (e) {
-    //     alert(e)
-    //     console.log(e)
-    //   }
-    // }
   }
 }
 </script>

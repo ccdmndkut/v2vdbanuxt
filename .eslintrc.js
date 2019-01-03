@@ -20,9 +20,9 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-unused-vars': 'off',
     'vue/multiline-html-element-content-newline': [
-      'error',
+      'warn',
       {
-        ignoreWhenEmpty: true,
+        ignoreWhenEmpty: off,
         ignores: ['pre', 'textarea']
       }
     ]
